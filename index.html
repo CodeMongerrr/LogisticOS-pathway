@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BharatTruck — 12-Week Engineering Roadmap</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F7F5;
+      --surface: #FFFFFF;
+      --border: #E4E2DA;
+      --border-light: #EFEFEC;
+      --text: #1A1A18;
+      --text-sub: #6B6962;
+      --text-muted: #9B9890;
+
+      --p1-bg: #EEEDFE; --p1-accent: #4F46E5;
+      --p2-bg: #E1F5EE; --p2-accent: #059669;
+      --p3-bg: #FAEEDA; --p3-accent: #D97706;
+      --p4-bg: #F1EFE8; --p4-accent: #6B6962;
+
+      --you: #3C3489; --d2: #085041; --d3: #633806; --all: #444441;
+      --you-bg: #EEEDFE; --d2-bg: #E1F5EE; --d3-bg: #FEF3C7; --all-bg: #F1EFE8;
+
+      --red-bg: #FCEBEB; --red: #A32D2D;
+      --green-bg: #EAF3DE; --green: #27500A;
+      --gray-bg: #F1EFE8; --gray: #444441;
+      --warn-bg: #FAEEDA; --warn: #633806;
+
+      --radius: 10px; --radius-sm: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110; --surface: #1C1C1A; --border: #2E2E2C; --border-light: #252523;
+        --text: #ECECEA; --text-sub: #9B9890; --text-muted: #5C5B57;
+        --p1-bg: #1E1D38; --p1-accent: #7C78F0;
+        --p2-bg: #0D2820; --p2-accent: #34D399;
+        --p3-bg: #2A1800; --p3-accent: #FBBF24;
+        --p4-bg: #1C1C1A; --p4-accent: #9B9890;
+        --you: #CECBF6; --d2: #9FE1CB; --d3: #FAC775; --all: #D3D1C7;
+        --you-bg: #1E1D38; --d2-bg: #0D2820; --d3-bg: #2A1800; --all-bg: #1C1C1A;
+        --red-bg: #501313; --red: #F09595;
+        --green-bg: #173404; --green: #C0DD97;
+        --gray-bg: #2C2C2A; --gray: #D3D1C7;
+        --warn-bg: #412402; --warn: #FAC775;
+        --shadow: 0 1px 3px rgba(0,0,0,.3); --shadow-md: 0 4px 12px rgba(0,0,0,.4);
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px; line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0 0;
+      position: sticky; top: 0; z-index: 10;
+      box-shadow: var(--shadow);
+    }
+    .header-top {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 20px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .brand-text h1 { font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
+    .brand-text p { font-size: 11px; color: var(--text-sub); margin-top: 1px; }
+
+    .header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      font-size: 11px; font-weight: 500; padding: 5px 12px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-sub);
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .btn:hover { background: var(--bg); color: var(--text); }
+    .btn.hidden-plan { display: none; }
+
+    /* ── VIEW TABS ── */
+    .view-tabs {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 20px;
+      display: flex; gap: 0; border-top: 1px solid var(--border-light);
+    }
+    .tab {
+      padding: 10px 16px; font-size: 12px; font-weight: 500;
+      color: var(--text-muted); cursor: pointer; border: none; background: none;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: all .15s; display: flex; align-items: center; gap: 6px;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--text); border-bottom-color: #4F46E5; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      max-width: 1200px; margin: 0 auto;
+      padding: 10px 20px 0;
+      display: flex; gap: 20px; flex-wrap: wrap;
+    }
+    .stat { display: flex; align-items: center; gap: 6px; }
+    .stat-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .stat span { font-size: 11px; color: var(--text-sub); }
+
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ════════════════════════════════
+       PLAN VIEW
+    ════════════════════════════════ */
+    .plan-wrap { max-width: 740px; margin: 0 auto; padding: 24px 20px 48px; }
+
+    .phase { margin-bottom: 28px; }
+    .phase-header {
+      padding: 12px 16px; border-radius: var(--radius);
+      margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .phase-header.p1 { background: var(--p1-bg); }
+    .phase-header.p2 { background: var(--p2-bg); }
+    .phase-header.p3 { background: var(--p3-bg); }
+    .phase-header.p4 { background: var(--p4-bg); }
+    .phase-left { display: flex; align-items: center; gap: 10px; }
+    .phase-icon { font-size: 18px; }
+    .phase-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .phase-desc { font-size: 11px; color: var(--text-sub); margin-top: 1px; }
+    .phase-weeks-badge {
+      font-size: 10px; font-weight: 600; padding: 3px 10px;
+      border-radius: 20px; background: rgba(0,0,0,.07); color: var(--text-sub); white-space: nowrap;
+    }
+    @media (prefers-color-scheme: dark) { .phase-weeks-badge { background: rgba(255,255,255,.1); } }
+
+    .week {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px; overflow: hidden;
+      background: var(--surface); box-shadow: var(--shadow); transition: box-shadow .2s;
+    }
+    .week:hover { box-shadow: var(--shadow-md); }
+    .week-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; cursor: pointer; user-select: none;
+      background: var(--surface); transition: background .15s;
+    }
+    .week-header:hover { background: var(--bg); }
+    .week-chevron { font-size: 10px; color: var(--text-muted); transition: transform .25s ease; flex-shrink: 0; }
+    .week.open .week-chevron { transform: rotate(90deg); }
+    .week-num { font-size: 10px; font-weight: 600; color: var(--text-muted); min-width: 50px; flex-shrink: 0; text-transform: uppercase; letter-spacing: .4px; }
+    .week-title { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+    .week-gate { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+    .gate-red  { background: var(--red-bg);  color: var(--red); }
+    .gate-green{ background: var(--green-bg); color: var(--green); }
+    .gate-gray { background: var(--gray-bg);  color: var(--gray); }
+
+    .week-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+    .week-body-inner { padding: 12px 14px 14px; border-top: 1px solid var(--border-light); }
+
+    .track { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .track:last-of-type { margin-bottom: 0; }
+    .track-label {
+      font-size: 10px; font-weight: 700; min-width: 72px; padding: 3px 7px;
+      border-radius: 4px; text-align: center; flex-shrink: 0; margin-top: 1px; letter-spacing: .3px;
+    }
+    .you-l  { color: var(--you);  background: var(--you-bg); }
+    .d2-l   { color: var(--d2);   background: var(--d2-bg); }
+    .d3-l   { color: var(--d3);   background: var(--d3-bg); }
+    .all-l  { color: var(--all);  background: var(--all-bg); }
+    .track-tasks { flex: 1; }
+    .task-item {
+      font-size: 12px; color: var(--text); padding: 5px 0; line-height: 1.45;
+      border-bottom: 1px solid var(--border-light); display: flex; gap: 6px; align-items: baseline;
+    }
+    .task-item:last-child { border-bottom: none; }
+    .task-code {
+      font-size: 9px; font-weight: 700; color: var(--text-muted);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 3px; padding: 1px 5px; white-space: nowrap; flex-shrink: 0;
+    }
+    .deliverable {
+      margin-top: 12px; padding: 8px 12px; border-radius: var(--radius-sm);
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 11px; color: var(--text-sub); line-height: 1.5;
+    }
+    .deliverable strong { color: var(--text); font-weight: 600; }
+    .warn {
+      margin-top: 10px; padding: 8px 12px; border-radius: var(--radius-sm);
+      background: var(--warn-bg); border-left: 3px solid var(--d3);
+      font-size: 11px; color: var(--warn); line-height: 1.5;
+    }
+
+    /* ════════════════════════════════
+       BOARD VIEW
+    ════════════════════════════════ */
+    .board-wrap {
+      padding: 20px 20px 48px;
+      overflow-x: auto;
+    }
+    .board-toolbar {
+      max-width: 1400px; margin: 0 auto 16px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .board-toolbar-label { font-size: 11px; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+    .filter-btn {
+      font-size: 11px; font-weight: 500; padding: 4px 10px;
+      border-radius: 20px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-sub);
+      cursor: pointer; transition: all .15s;
+    }
+    .filter-btn:hover { background: var(--bg); color: var(--text); }
+    .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .board {
+      display: flex; gap: 14px; align-items: flex-start;
+      max-width: 1400px; margin: 0 auto;
+      min-width: 900px;
+    }
+
+    /* column */
+    .col { flex: 1; min-width: 200px; }
+    .col-header {
+      padding: 10px 12px; border-radius: var(--radius) var(--radius) 0 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .col-name { font-size: 12px; font-weight: 700; letter-spacing: .2px; }
+    .col-count {
+      font-size: 10px; font-weight: 700; padding: 1px 7px;
+      border-radius: 20px; background: rgba(0,0,0,.1); white-space: nowrap;
+    }
+    @media (prefers-color-scheme: dark) { .col-count { background: rgba(255,255,255,.15); } }
+
+    /* drop zone */
+    .col-body {
+      min-height: 120px; padding: 8px;
+      border: 2px dashed transparent;
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: var(--bg); transition: border-color .15s, background .15s;
+    }
+    .col-body.drag-over {
+      border-color: #4F46E5;
+      background: rgba(79,70,229,.04);
+    }
+    .col-empty {
+      padding: 24px 12px; text-align: center;
+      font-size: 11px; color: var(--text-muted);
+      border: 1.5px dashed var(--border-light); border-radius: var(--radius-sm);
+    }
+
+    /* card */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 11px 12px 10px;
+      margin-bottom: 8px; box-shadow: var(--shadow);
+      transition: box-shadow .15s, transform .15s, opacity .15s;
+      cursor: grab;
+    }
+    .card:active { cursor: grabbing; }
+    .card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .card.dragging { opacity: .35; transform: scale(.97); box-shadow: none; }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .card-desc {
+      font-size: 11px; color: var(--text-sub); line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .card-code {
+      font-size: 9px; font-weight: 700; padding: 2px 6px;
+      border-radius: 4px; background: var(--bg); border: 1px solid var(--border);
+      color: var(--text-muted); white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+    }
+    .card-code.pri-p0 { background:#FCEBEB; border-color:#F5C6C6; color:var(--red); }
+    .card-code.pri-p1 { background:#DBEAFE; border-color:#BFDBFE; color:#1D4ED8; }
+    .card-code.pri-p2 { background:var(--gray-bg); border-color:var(--border); color:var(--gray); }
+    @media (prefers-color-scheme: dark) {
+      .card-code.pri-p0 { background:#501313; border-color:#7A2323; color:var(--red); }
+      .card-code.pri-p1 { background:#1E3A5F; border-color:#2B5185; color:#93C5FD; }
+    }
+    .card-name {
+      font-size: 12px; font-weight: 500; color: var(--text);
+      line-height: 1.4; flex: 1;
+    }
+
+    .card-tags { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+
+    /* kanban column header colour classes */
+    .ch-yet-to-start { background:#F1EFE8; } .ch-yet-to-start .col-name,.ch-yet-to-start .col-count { color:#6B6962; }
+    .ch-in-progress  { background:#DBEAFE; } .ch-in-progress  .col-name,.ch-in-progress  .col-count { color:#1D4ED8; }
+    .ch-built        { background:#CCFBF1; } .ch-built        .col-name,.ch-built        .col-count { color:#0F766E; }
+    .ch-tested       { background:#FEF9C3; } .ch-tested       .col-name,.ch-tested       .col-count { color:#854D0E; }
+    .ch-completed    { background:#DCFCE7; } .ch-completed    .col-name,.ch-completed    .col-count { color:#166534; }
+    @media (prefers-color-scheme: dark) {
+      .ch-yet-to-start { background:#1C1C1A; } .ch-yet-to-start .col-name,.ch-yet-to-start .col-count { color:#9B9890; }
+      .ch-in-progress  { background:#1E3A5F; } .ch-in-progress  .col-name,.ch-in-progress  .col-count { color:#93C5FD; }
+      .ch-built        { background:#0F3430; } .ch-built        .col-name,.ch-built        .col-count { color:#5EEAD4; }
+      .ch-tested       { background:#422006; } .ch-tested       .col-name,.ch-tested       .col-count { color:#FDE68A; }
+      .ch-completed    { background:#14532D; } .ch-completed    .col-name,.ch-completed    .col-count { color:#86EFAC; }
+    }
+
+    /* area badge */
+    .tag-area {
+      font-size: 9px; font-weight: 600; padding: 2px 7px;
+      border-radius: 3px; white-space: nowrap;
+    }
+    .tag-area.shipper { background: var(--p1-bg); color: var(--p1-accent); }
+    .tag-area.driver  { background: var(--p2-bg); color: var(--p2-accent); }
+    .tag-area.fleet   { background: var(--p3-bg); color: var(--p3-accent); }
+    .tag-area.admin   { background: var(--you-bg); color: var(--you); }
+
+    /* phase tag */
+    .tag-phase {
+      font-size: 9px; font-weight: 600; padding: 2px 7px;
+      border-radius: 3px; white-space: nowrap;
+    }
+    .tag-phase.p1 { background: var(--p1-bg); color: var(--p1-accent); }
+    .tag-phase.p2 { background: var(--p2-bg); color: var(--p2-accent); }
+    .tag-phase.p3 { background: var(--p3-bg); color: var(--p3-accent); }
+    .tag-phase.p4 { background: var(--p4-bg); color: var(--p4-accent); }
+
+    /* week tag */
+    .tag-week {
+      font-size: 9px; font-weight: 500; padding: 2px 7px;
+      border-radius: 3px; background: var(--bg);
+      border: 1px solid var(--border); color: var(--text-muted); white-space: nowrap;
+    }
+
+    /* status tag — clickable */
+    .tag-status {
+      font-size: 9px; font-weight: 700; padding: 2px 8px;
+      border-radius: 3px; cursor: pointer; user-select: none;
+      transition: opacity .1s; white-space: nowrap; margin-left: auto;
+    }
+    .tag-status:hover { opacity: .75; }
+    .tag-status[data-s="not-started"]   { background: var(--gray-bg);  color: var(--gray); }
+    .tag-status[data-s="about-to-start"]{ background: #FEF3C7;          color: #92400E; }
+    .tag-status[data-s="scaffolding"]   { background: #EDE9FE;          color: #5B21B6; }
+    .tag-status[data-s="in-progress"]   { background: #DBEAFE;          color: #1D4ED8; }
+    .tag-status[data-s="built"]         { background: #CCFBF1;          color: #0F766E; }
+    .tag-status[data-s="under-testing"] { background: #FEF9C3;          color: #854D0E; }
+    .tag-status[data-s="completed"]     { background: #DCFCE7;          color: #166534; }
+    .tag-status[data-s="done"]          { background: var(--green-bg);  color: var(--green); }
+    .tag-status[data-s="blocked"]       { background: var(--red-bg);    color: var(--red); }
+    @media (prefers-color-scheme: dark) {
+      .tag-status[data-s="about-to-start"] { background: #412402; color: #FAC775; }
+      .tag-status[data-s="scaffolding"]    { background: #2E1065; color: #C4B5FD; }
+      .tag-status[data-s="in-progress"]    { background: #1E3A5F; color: #93C5FD; }
+      .tag-status[data-s="built"]          { background: #0F3430; color: #5EEAD4; }
+      .tag-status[data-s="under-testing"]  { background: #422006; color: #FDE68A; }
+      .tag-status[data-s="completed"]      { background: #14532D; color: #86EFAC; }
+    }
+
+    /* card filtered-out */
+    .card.filtered { display: none; }
+
+    /* edit btn on card */
+    .card-edit-btn {
+      font-size: 10px; padding: 2px 7px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); background: var(--bg); color: var(--text-muted);
+      cursor: pointer; flex-shrink: 0; opacity: 0; transition: opacity .15s;
+    }
+    .card:hover .card-edit-btn { opacity: 1; }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.45); z-index: 100;
+      align-items: center; justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; width: 460px; max-width: calc(100vw - 32px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.2); padding: 24px;
+    }
+    .modal-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-close {
+      font-size: 18px; color: var(--text-muted); cursor: pointer;
+      background: none; border: none; line-height: 1; padding: 2px 6px;
+    }
+    .modal-close:hover { color: var(--text); }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-sub); margin-bottom: 5px; }
+    .field input, .field select, .field textarea {
+      width: 100%; font-size: 13px; padding: 8px 10px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--bg); color: var(--text); outline: none;
+      transition: border-color .15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #4F46E5; }
+    .field textarea { resize: vertical; min-height: 64px; }
+    .field-row { display: flex; gap: 12px; }
+    .field-row .field { flex: 1; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+    .btn-primary {
+      flex: 1; padding: 9px; font-size: 13px; font-weight: 600;
+      background: #4F46E5; color: #fff; border: none;
+      border-radius: var(--radius-sm); cursor: pointer; transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-danger {
+      padding: 9px 16px; font-size: 13px; font-weight: 600;
+      background: var(--red-bg); color: var(--red); border: 1px solid #F5C6C6;
+      border-radius: var(--radius-sm); cursor: pointer; transition: opacity .15s;
+    }
+    .btn-danger:hover { opacity: .8; }
+    .btn-secondary {
+      padding: 9px 16px; font-size: 13px; font-weight: 500;
+      background: var(--bg); color: var(--text-sub); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); cursor: pointer;
+    }
+
+    footer {
+      text-align: center; padding: 24px 20px 40px;
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .board { min-width: unset; flex-direction: column; }
+      .col { max-width: 100%; }
+      .plan-wrap { padding: 16px 12px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-icon">🚛</div>
+      <div class="brand-text">
+        <h1>BharatTruck</h1>
+        <p>12-Week Engineering Roadmap</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn" id="btn-expand" onclick="expandAll()">Expand All</button>
+      <button class="btn" id="btn-collapse" onclick="collapseAll()">Collapse All</button>
+    </div>
+  </div>
+  <div class="view-tabs">
+    <button class="tab active" onclick="switchView('plan', this)">📋 Plan</button>
+    <button class="tab" onclick="switchView('board', this)">🗂 Board</button>
+  </div>
+</header>
+
+<!-- ════════════════════════════════
+     PLAN VIEW
+════════════════════════════════ -->
+<div id="view-plan" class="view active">
+<div class="plan-wrap">
+
+<div class="phase">
+  <div class="phase-header p1">
+    <div class="phase-left"><span class="phase-icon">🏗</span><div>
+      <div class="phase-title">Phase 1 — Foundation</div>
+      <div class="phase-desc">Repo, infra, auth, real-time server</div>
+    </div></div>
+    <span class="phase-weeks-badge">Weeks 1–3</span>
+  </div>
+
+  <div class="week" id="w1">
+    <div class="week-header" onclick="toggle('w1')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 1</span>
+      <span class="week-title">Shared contract + repo + infra skeleton</span>
+      <span class="week-gate gate-red">BLOCKER WEEK</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">S1</span>GitHub monorepo — /backend /mobile /admin /shared-types structure</div>
+        <div class="task-item"><span class="task-code">S2</span>Supabase project created, Mumbai region, keys in .env.example</div>
+        <div class="task-item"><span class="task-code">S3</span>All 5 core table migrations written and run — users, drivers, bookings, trip_locations, payments</div>
+        <div class="task-item"><span class="task-code">S4</span>API contract doc written — all endpoint paths, request/response shapes</div>
+        <div class="task-item"><span class="task-code">S6</span>GitHub Actions CI/CD pipeline — lint + typecheck on PR, deploy to staging on merge</div>
+        <div class="task-item"><span class="task-code">Y1</span>Fastify server scaffold — TypeScript, plugins, health endpoint, error handler</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-1</span>React Native Expo project init — TypeScript, React Navigation, shared component library started</div>
+        <div class="task-item">Review + sign off on API contract doc by end of week</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">S5</span>Socket.IO event names + payloads proposed — location:update, trip:status, driver:assigned</div>
+        <div class="task-item"><span class="task-code">D3-RT</span>Socket.IO server started — Fastify plugin, room structure per booking_id</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 1 gate:</strong> Repo live, schema running in Supabase, API contract agreed by all 3, Socket.IO server accepting connections, CI pipeline green. Nothing moves to Week 2 until this is done.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w2">
+    <div class="week-header" onclick="toggle('w2')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 2</span>
+      <span class="week-title">Auth + real-time server complete</span>
+      <span class="week-gate gate-gray">Infra sprint</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">Y2</span>Supabase client, RLS policies, seed script for local dev</div>
+        <div class="task-item"><span class="task-code">Y3</span>JWT middleware — 15min access + 7 day refresh, applied to all protected routes</div>
+        <div class="task-item"><span class="task-code">Y4</span>OTP endpoints — POST /auth/send-otp (MSG91), POST /auth/verify-otp, rate limiting</div>
+        <div class="task-item"><span class="task-code">Y5</span>Redis via Upstash — OTP store (TTL 5min), session cache, driver availability cache</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-2</span>Auth screens — phone input → OTP → JWT in SecureStore, useAuth() hook</div>
+        <div class="task-item">Shipper registration form + basic profile screen</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-RT</span>Socket.IO server complete — rooms, reconnect logic, heartbeat, Redis pub/sub for multi-instance</div>
+        <div class="task-item">Integration test: client connects, joins room, receives test event</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 2:</strong> Auth flow works end-to-end on device. Socket.IO server stable with reconnect handling. Dev 2 can log in as a shipper.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w3">
+    <div class="week-header" onclick="toggle('w3')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 3</span>
+      <span class="week-title">AWS infra live + KYC + pricing engine stub</span>
+      <span class="week-gate gate-gray">Infra sprint</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">Y6</span>AWS EC2 x2, Nginx, SSL via Certbot, staging domain live</div>
+        <div class="task-item"><span class="task-code">Y7</span>Signzy KYC integration — driver doc upload to S3, webhook for verification result</div>
+        <div class="task-item"><span class="task-code">Y8</span>Pricing microservice — Python + FastAPI, static rate v1 (distance × weight × multiplier)</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-3</span>Booking creation — SelectLocation screen with Google Maps picker</div>
+        <div class="task-item">LoadDetails form — weight, cargo type, date inputs with validation</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-1</span>Driver app scaffold — auth screens reusing D2-1 components, driver navigation stack</div>
+        <div class="task-item"><span class="task-code">D3-2</span>Driver registration + KYC upload screens — photo capture, S3 upload, status polling</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 3:</strong> Staging server live and accessible. Pricing engine returning quotes. Driver can upload KYC docs and see pending status.</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-header p2">
+    <div class="phase-left"><span class="phase-icon">🔄</span><div>
+      <div class="phase-title">Phase 2 — Core Booking Flow</div>
+      <div class="phase-desc">Booking, matching, GPS tracking, delivery, payments prep</div>
+    </div></div>
+    <span class="phase-weeks-badge">Weeks 4–7</span>
+  </div>
+
+  <div class="week" id="w4">
+    <div class="week-header" onclick="toggle('w4')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 4</span>
+      <span class="week-title">Booking API + matching engine</span>
+      <span class="week-gate gate-gray">Backend heavy</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">Y9</span>Driver matching — PostGIS nearest-driver query, filters on availability + KYC + vehicle type</div>
+        <div class="task-item"><span class="task-code">Y10</span>Bookings API — POST /bookings, GET /bookings/:id, GET /bookings (list), PUT /bookings/:id/cancel</div>
+        <div class="task-item"><span class="task-code">Y11</span>Notifications service — BullMQ queue, FCM push + MSG91 SMS fire-and-forget</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-3</span>Price quote screen — calls Y10, displays breakdown</div>
+        <div class="task-item"><span class="task-code">D2-3</span>Confirm booking screen — final review, submit to backend</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-3</span>Load notification screen — FCM push received, load card with pickup/destination/earnings</div>
+        <div class="task-item">Accept/reject flow — one-tap, calls POST /drivers/:id/accept-load</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 4:</strong> Shipper can create a booking and get a price quote. Matched driver receives a push notification and can accept the load.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w5">
+    <div class="week-header" onclick="toggle('w5')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 5</span>
+      <span class="week-title">Trip start + GPS tracking live</span>
+      <span class="week-gate gate-gray">Real-time sprint</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item">Booking state machine hardened — pending → accepted → in_transit → delivered transitions</div>
+        <div class="task-item">trip_locations write endpoint — stores GPS pings to TimescaleDB every 30s</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-6</span>Live tracking screen — Google Maps, driver marker, consumes Socket.IO location:update</div>
+        <div class="task-item">ETA display — calculated from current location + destination</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-4</span>Navigation screen — Google Maps turn-by-turn, background location with expo-location</div>
+        <div class="task-item">Location broadcast — emit location:update via Socket.IO every 5s while in_transit</div>
+        <div class="task-item"><span class="task-code">D3-5</span>OTP pickup confirmation — driver enters shipper OTP, trip moves to in_transit</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 5:</strong> Full live tracking working. Shipper sees driver moving on map in real time. This is your first demo-able milestone.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w6">
+    <div class="week-header" onclick="toggle('w6')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 6</span>
+      <span class="week-title">ePOD + delivery completion</span>
+      <span class="week-gate gate-gray">Delivery flow</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item">POST /drivers/:id/end-trip endpoint — validates ePOD, moves booking to delivered, triggers payment release event</div>
+        <div class="task-item">S3 presigned URL endpoint for ePOD photo upload</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-4</span>Trip history screen — past bookings list, status timeline per trip</div>
+        <div class="task-item"><span class="task-code">D2-5</span>Driver rating + review — 5-star + text, fires after delivery confirmed</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-6</span>ePOD screen — camera capture, shipper signature canvas, upload to S3, submit to end-trip endpoint</div>
+        <div class="task-item"><span class="task-code">D3-7</span>Earnings dashboard — daily/weekly earnings, availability toggle, SOS button</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 6:</strong> Complete end-to-end flow works without payments. Book → match → track → deliver → rate. Full demo to team.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w7">
+    <div class="week-header" onclick="toggle('w7')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 7</span>
+      <span class="week-title">Buffer + hardening week</span>
+      <span class="week-gate gate-gray">Catch-up built in</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track"><span class="track-label all-l">All</span><div class="track-tasks">
+        <div class="task-item">Catch up anything slipped from Weeks 4–6. No new features this week.</div>
+        <div class="task-item">Fix bugs found in Week 6 end-to-end demo</div>
+        <div class="task-item">API error handling audit — every endpoint returns correct status codes and error messages</div>
+        <div class="task-item">Cancel + reschedule flow (D2-7) if not done in Week 6</div>
+      </div></div>
+      <div class="warn">⚠️ This buffer week is non-negotiable. Do not fill it with new features. The weeks ahead are payment integration which has zero tolerance for upstream bugs.</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-header p3">
+    <div class="phase-left"><span class="phase-icon">💳</span><div>
+      <div class="phase-title">Phase 3 — Payments + Admin</div>
+      <div class="phase-desc">Razorpay escrow, admin panel, fleet portal, monitoring</div>
+    </div></div>
+    <span class="phase-weeks-badge">Weeks 8–10</span>
+  </div>
+
+  <div class="week" id="w8">
+    <div class="week-header" onclick="toggle('w8')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 8</span>
+      <span class="week-title">Razorpay integration + escrow</span>
+      <span class="week-gate gate-gray">Payments sprint</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item">POST /payments/create-order — Razorpay order creation, linked to booking_id</div>
+        <div class="task-item">POST /payments/verify — signature verification, escrow status update</div>
+        <div class="task-item">Razorpay webhook handler — payment captured → escrow held, ePOD confirmed → escrow released</div>
+        <div class="task-item">Earnings settlement — trigger payout to driver bank account 2hrs after delivery</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D2-9</span>Razorpay payment sheet in React Native — opens after booking confirm, handles success/failure</div>
+        <div class="task-item"><span class="task-code">D2-10</span>Payment status screen — escrow held/released state, payment history per booking</div>
+        <div class="task-item"><span class="task-code">D2-8</span>Push notification handler — FCM token registration, foreground + background handling</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-8</span>Fleet owner portal — Next.js scaffold, auth-gated, fleet registration, driver assignment to trucks</div>
+        <div class="task-item">E-way bill + GST invoice generation stub</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 8:</strong> Full payment flow works in Razorpay test mode. Money held in escrow, released after ePOD. Driver receives earnings.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w9">
+    <div class="week-header" onclick="toggle('w9')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 9</span>
+      <span class="week-title">Admin panel + fleet portal</span>
+      <span class="week-gate gate-gray">Ops tooling</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">Y12</span>Admin panel Next.js scaffold — auth-gated, sidebar nav, role: admin only</div>
+        <div class="task-item"><span class="task-code">Y13</span>KYC verification workflow — doc viewer, approve/reject, status update to driver</div>
+        <div class="task-item"><span class="task-code">Y14</span>Live trip monitoring map — all active trips, Supabase Realtime subscription</div>
+        <div class="task-item"><span class="task-code">Y15</span>Dispute resolution + user management — ticket system, ban/suspend, pricing overrides</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item">Trip history — E-way bill + ePOD PDF download (D2-4 completion)</div>
+        <div class="task-item">Cancel + reschedule if not done — free cancel up to 2hrs before pickup</div>
+        <div class="task-item">In-app chat with driver — basic text messaging (P1, do if time allows)</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">D3-9</span>Fleet availability calendar — set available dates per vehicle, blocks matching for unavailable trucks</div>
+        <div class="task-item"><span class="task-code">D3-10</span>GST invoice generation — auto PDF per trip, download from fleet portal</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 9:</strong> Admin can verify drivers, monitor all live trips, and resolve disputes. Fleet owners can manage their trucks.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w10">
+    <div class="week-header" onclick="toggle('w10')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 10</span>
+      <span class="week-title">Monitoring + security audit</span>
+      <span class="week-gate gate-gray">Hardening</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track" data-who="you"><span class="track-label you-l">Joshi</span><div class="track-tasks">
+        <div class="task-item"><span class="task-code">Y16</span>Sentry + Grafana Cloud live — API latency p95, DB query time, uptime alerts</div>
+        <div class="task-item">Security audit — TLS enforced, PII encrypted at rest, rate limits on all auth endpoints</div>
+        <div class="task-item">DPDP Act compliance — consent collection, right to deletion workflow</div>
+      </div></div>
+      <div class="track" data-who="d2"><span class="track-label d2-l">Sarthak Arora</span><div class="track-tasks">
+        <div class="task-item">Shipper app performance pass — app load time target under 3s</div>
+        <div class="task-item">Offline state handling — graceful errors when no network</div>
+      </div></div>
+      <div class="track" data-who="d3"><span class="track-label d3-l">Siddharth Shukla</span><div class="track-tasks">
+        <div class="task-item">Driver app background location battery optimisation</div>
+        <div class="task-item">Low-connectivity fallback — SMS-based status updates when Socket.IO drops</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 10:</strong> Platform is production-safe. Monitoring live. Security baseline met. Ready for real users.</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-header p4">
+    <div class="phase-left"><span class="phase-icon">🚀</span><div>
+      <div class="phase-title">Phase 4 — Testing + Soft Launch</div>
+      <div class="phase-desc">E2E testing, Razorpay live mode, City 1 go-live</div>
+    </div></div>
+    <span class="phase-weeks-badge">Weeks 11–12</span>
+  </div>
+
+  <div class="week" id="w11">
+    <div class="week-header" onclick="toggle('w11')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 11</span>
+      <span class="week-title">End-to-end testing + bug sprint</span>
+      <span class="week-gate gate-gray">QA week</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track"><span class="track-label all-l">All</span><div class="track-tasks">
+        <div class="task-item">Full end-to-end test: shipper books → driver matches → GPS tracks → ePOD → payment released</div>
+        <div class="task-item">Razorpay switched from test mode to live mode — test with real small transactions</div>
+        <div class="task-item">Load test: 50 concurrent bookings, check API latency stays under 200ms p95</div>
+        <div class="task-item">All P0 bugs fixed. P1 bugs logged and triaged. No new features.</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 11:</strong> Platform passes full E2E test. Razorpay live. Performance targets met. Bug list is P1 only — nothing blocking launch.</div>
+    </div></div>
+  </div>
+
+  <div class="week" id="w12">
+    <div class="week-header" onclick="toggle('w12')">
+      <span class="week-chevron">▶</span><span class="week-num">Week 12</span>
+      <span class="week-title">Soft launch — City 1</span>
+      <span class="week-gate gate-green">SHIP IT</span>
+    </div>
+    <div class="week-body"><div class="week-body-inner">
+      <div class="track"><span class="track-label all-l">All</span><div class="track-tasks">
+        <div class="task-item">50 pre-onboarded drivers KYC-verified and active in launch city</div>
+        <div class="task-item">First 20 shippers invited — business partner's pilot contacts</div>
+        <div class="task-item">All 3 devs on standby for hotfixes — no new development this week</div>
+        <div class="task-item">Daily metric check: booking completion rate, driver acceptance rate, app crash rate</div>
+        <div class="task-item">Week 12 retrospective — what broke, what worked, what's Phase 2</div>
+      </div></div>
+      <div class="deliverable"><strong>End of Week 12:</strong> Real transactions happening. Real money moving. Phase 1 complete.</div>
+    </div></div>
+  </div>
+</div>
+
+</div>
+</div><!-- /view-plan -->
+
+
+<!-- ════════════════════════════════
+     BOARD VIEW
+════════════════════════════════ -->
+<div id="view-board" class="view">
+<div class="board-wrap">
+  <div class="board-toolbar">
+    <button class="btn" style="background:#4F46E5;color:#fff;border-color:#4F46E5;font-weight:600" onclick="openModal()">+ Add Card</button>
+    <span class="board-toolbar-label" style="margin-left:8px">Area:</span>
+    <button class="filter-btn active" data-ftype="area" data-fval="all"     onclick="setFilter('area','all',this)">All</button>
+    <button class="filter-btn"        data-ftype="area" data-fval="shipper"  onclick="setFilter('area','shipper',this)">Shipper App</button>
+    <button class="filter-btn"        data-ftype="area" data-fval="driver"   onclick="setFilter('area','driver',this)">Driver App</button>
+    <button class="filter-btn"        data-ftype="area" data-fval="fleet"    onclick="setFilter('area','fleet',this)">Fleet Portal</button>
+    <button class="filter-btn"        data-ftype="area" data-fval="admin"    onclick="setFilter('area','admin',this)">Admin Panel</button>
+    <span class="board-toolbar-label" style="margin-left:12px">Priority:</span>
+    <button class="filter-btn active" data-ftype="pri"  data-fval="all"     onclick="setFilter('pri','all',this)">All</button>
+    <button class="filter-btn"        data-ftype="pri"  data-fval="P0"       onclick="setFilter('pri','P0',this)">P0</button>
+    <button class="filter-btn"        data-ftype="pri"  data-fval="P1"       onclick="setFilter('pri','P1',this)">P1</button>
+    <button class="filter-btn"        data-ftype="pri"  data-fval="P2"       onclick="setFilter('pri','P2',this)">P2</button>
+  </div>
+  <div class="board" id="board"></div>
+</div>
+</div><!-- /view-board -->
+
+<!-- ── CARD MODAL ── -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modal-title-text">Add Card</span>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" id="f-name" placeholder="Feature name">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea id="f-desc" placeholder="Short description shown on card"></textarea>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Column</label>
+        <select id="f-col">
+          <option value="shipper">Shipper App</option>
+          <option value="driver">Driver App</option>
+          <option value="fleet">Fleet Portal</option>
+          <option value="admin">Admin Panel</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Assignee</label>
+        <select id="f-assignee">
+          <option value="d2">Sarthak Arora</option>
+          <option value="d3">Siddharth Shukla</option>
+          <option value="you">Joshi</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Priority</label>
+        <select id="f-priority">
+          <option value="P0">P0 — Must Have</option>
+          <option value="P1">P1 — Should Have</option>
+          <option value="P2">P2 — Nice to Have</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Phase</label>
+        <select id="f-phase">
+          <option value="1">Phase 1</option>
+          <option value="2">Phase 2</option>
+          <option value="3">Phase 3</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <div id="modal-delete-wrap"></div>
+      <button class="btn-primary" id="modal-save-btn" onclick="saveCard()">Save Card</button>
+    </div>
+  </div>
+</div>
+
+<footer>BharatTruck Engineering &mdash; Internal Planning Document</footer>
+
+<script>
+// ─── CONSTANTS ───────────────────────────────────────────────
+const COL_META = {
+  shipper: { label:'Shipper App',   sub:'Sarthak Arora · React Native',    color:'d2'  },
+  driver:  { label:'Driver App',    sub:'Siddharth Shukla · React Native',  color:'d3'  },
+  fleet:   { label:'Fleet Portal',  sub:'Siddharth Shukla · Next.js Web',   color:'d3'  },
+  admin:   { label:'Admin Panel',   sub:'Joshi · Next.js + Fastify',        color:'you' },
+};
+const ASSIGNEE_LABELS = { you:'Joshi', d2:'Sarthak Arora', d3:'Siddharth Shukla' };
+const PH_LABELS  = { 1:'Ph 1', 2:'Ph 2', 3:'Ph 3' };
+const STATUS_CYCLE  = ['not-started','about-to-start','scaffolding','in-progress','built','under-testing','completed','done','blocked'];
+const STATUS_LABELS = {
+  'not-started':   'Not Started',
+  'about-to-start':'About to Start',
+  'scaffolding':   'Scaffolding',
+  'in-progress':   'In Progress',
+  'built':         'Built',
+  'under-testing': 'Under Testing',
+  'completed':     'Completed',
+  'done':          'Done',
+  'blocked':       'Blocked',
+};
+
+// ─── SEED DATA (fallback + first-run DB seed) ────────────────
+const SEED = [
+  { id:'SA-01', col:'shipper', name:'Shipper Registration & OTP Login',  description:'Mobile number + Aadhaar optional',               priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-02', col:'shipper', name:'Book a Truck (Pickup → Drop)',       description:'Source, destination, date, load type, weight',   priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-03', col:'shipper', name:'Instant Price Quote',                description:'AI-generated price with breakdown',              priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-04', col:'shipper', name:'Driver Matching & Acceptance',       description:'Nearest available driver auto-matched',          priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-05', col:'shipper', name:'Real-Time GPS Tracking',             description:'Live truck location on map',                     priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-06', col:'shipper', name:'UPI / Card / Wallet Payment',        description:'Razorpay integration with escrow',               priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-07', col:'shipper', name:'Trip History & E-Way Bill',          description:'Download proof of delivery + GST docs',          priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-08', col:'shipper', name:'Driver Rating & Review',             description:'5-star + text review post delivery',             priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-09', col:'shipper', name:'Push Notifications & SMS',           description:'Booking status, driver ETA, payment updates',    priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-10', col:'shipper', name:'In-App Chat with Driver',            description:'Text messaging with translation support',        priority:'P1', phase:1, assignee:'d2' },
+  { id:'SA-11', col:'shipper', name:'Cancel & Reschedule',                description:'Free cancellation up to 2 hrs before pickup',   priority:'P0', phase:1, assignee:'d2' },
+  { id:'SA-12', col:'shipper', name:'WhatsApp Booking Bot',               description:'Full booking flow via WhatsApp Business API',    priority:'P0', phase:2, assignee:'d2' },
+  { id:'SA-13', col:'shipper', name:'Part-Load (LTL) Booking',            description:'Share truck with others, pay per KG',            priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-14', col:'shipper', name:'Multi-Stop Trips',                   description:'Book truck for multiple pickup/drop points',     priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-15', col:'shipper', name:'Recurring / Scheduled Loads',        description:'Set weekly or monthly regular routes',           priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-16', col:'shipper', name:'Cargo Insurance',                    description:'In-app insurance purchase (IRDAI partners)',     priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-17', col:'shipper', name:'Load Board / Open Market',           description:'Post load publicly, get competitive bids',       priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-18', col:'shipper', name:'Vernacular Voice Search',            description:'Book in Hindi, Tamil, Telugu, etc.',             priority:'P1', phase:2, assignee:'d2' },
+  { id:'SA-19', col:'shipper', name:'Freight Credit Line',                description:'BNPL for verified businesses (fintech)',         priority:'P2', phase:2, assignee:'d2' },
+  { id:'SA-20', col:'shipper', name:'ONDC Integration',                   description:'List services on Open Network for Digital Commerce', priority:'P1', phase:3, assignee:'d2' },
+  { id:'SA-21', col:'shipper', name:'Business Dashboard',                 description:'Analytics for SME logistics teams',              priority:'P1', phase:3, assignee:'d2' },
+  { id:'SA-22', col:'shipper', name:'API for Enterprises',                description:'Programmatic booking via REST API',              priority:'P2', phase:3, assignee:'d2' },
+  { id:'SA-23', col:'shipper', name:'ERP/SAP Integration',                description:'Plug into enterprise supply chain systems',      priority:'P2', phase:3, assignee:'d2' },
+  { id:'SA-24', col:'shipper', name:'Carbon Footprint Reports',           description:'ESG reporting for corporate clients',            priority:'P2', phase:3, assignee:'d2' },
+  { id:'DA-01', col:'driver',  name:'Driver Registration + KYC',          description:'License, RC, Aadhaar, PAN via Digilocker',      priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-02', col:'driver',  name:'Load Notifications & Accept/Reject', description:'Push notification, one-tap accept',              priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-03', col:'driver',  name:'Navigation Integration',             description:'Google Maps / HERE Maps for route guidance',     priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-04', col:'driver',  name:'OTP-based Pickup Confirmation',      description:'Shipper shares OTP, driver enters to start',     priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-05', col:'driver',  name:'Digital Proof of Delivery (ePOD)',   description:'Photo capture + shipper signature at delivery',  priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-06', col:'driver',  name:'Earnings Dashboard',                 description:'Daily/weekly/monthly earnings + payment status', priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-07', col:'driver',  name:'Instant Bank Transfer',              description:'Earnings settled within 2 hours of delivery',   priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-08', col:'driver',  name:'Driver Availability Toggle',         description:'Online/Offline status for load matching',        priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-09', col:'driver',  name:'Emergency SOS Button',               description:'One-tap alert to BharatTruck ops + contacts',   priority:'P0', phase:1, assignee:'d3' },
+  { id:'DA-10', col:'driver',  name:'Document Vault',                     description:'Store and share RC, license, permit digitally', priority:'P1', phase:1, assignee:'d3' },
+  { id:'DA-11', col:'driver',  name:'Return Load Finder',                 description:'Find loads near drop point, avoid empty return',priority:'P0', phase:2, assignee:'d3' },
+  { id:'DA-12', col:'driver',  name:'Fuel Card Integration',              description:'Discounted fuel via HPCL/BPCL partner card',    priority:'P1', phase:2, assignee:'d3' },
+  { id:'DA-13', col:'driver',  name:'Driver Badge & Trust Score',         description:'Verified, Top Rated, On-Time Champion badges',  priority:'P1', phase:2, assignee:'d3' },
+  { id:'DA-14', col:'driver',  name:'Driver Loan / Insurance Access',     description:'Financial products via embedded fintech',       priority:'P2', phase:2, assignee:'d3' },
+  { id:'DA-15', col:'driver',  name:'Performance Leaderboard',            description:'Rankings with bonus incentives for top drivers',priority:'P2', phase:2, assignee:'d3' },
+  { id:'DA-16', col:'driver',  name:'Multilingual Driver App',            description:'Full app in Hindi, Tamil, Telugu, Marathi',    priority:'P0', phase:2, assignee:'d3' },
+  { id:'FP-01', col:'fleet',   name:'Fleet Registration & Verification',  description:'Add multiple trucks under one account',         priority:'P0', phase:1, assignee:'d3' },
+  { id:'FP-02', col:'fleet',   name:'Driver Management',                  description:'Assign drivers to trucks, track performance',   priority:'P0', phase:1, assignee:'d3' },
+  { id:'FP-03', col:'fleet',   name:'Fleet Availability Calendar',        description:'Set available dates per vehicle',               priority:'P0', phase:1, assignee:'d3' },
+  { id:'FP-04', col:'fleet',   name:'GST Invoice Generation',             description:'Auto-generate GST-compliant invoices',          priority:'P0', phase:1, assignee:'d3' },
+  { id:'FP-05', col:'fleet',   name:'Fleet Analytics Dashboard',          description:'Revenue, utilization rate, idle time per truck',priority:'P1', phase:2, assignee:'d3' },
+  { id:'FP-06', col:'fleet',   name:'Maintenance Reminder',               description:'PUC, insurance, permit expiry alerts',          priority:'P1', phase:2, assignee:'d3' },
+  { id:'FP-07', col:'fleet',   name:'TDS & Payment Reports',              description:'Monthly financial reports for accounting',      priority:'P1', phase:2, assignee:'d3' },
+  { id:'FP-08', col:'fleet',   name:'Load Bidding for Fleet Owners',      description:'Competitive bid on large loads',                priority:'P2', phase:3, assignee:'d3' },
+  { id:'AP-01', col:'admin',   name:'KYC Verification Workflow',          description:'Review and approve driver/fleet documents',     priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-02', col:'admin',   name:'Live Trip Monitoring',               description:'All active trips on map, intervention',         priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-03', col:'admin',   name:'Dispute Resolution Module',          description:'Ticket system for shipper-driver conflicts',    priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-04', col:'admin',   name:'Dynamic Pricing Controls',           description:'Override AI pricing, set surge zones',          priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-05', col:'admin',   name:'Revenue & Commission Tracking',      description:'Platform fee management, payout schedules',     priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-06', col:'admin',   name:'User Management & Banning',          description:'Suspend/block accounts, fraud flagging',        priority:'P0', phase:1, assignee:'you' },
+  { id:'AP-07', col:'admin',   name:'Marketing Campaign Manager',         description:'Push notifications, SMS campaigns, offers',     priority:'P1', phase:2, assignee:'you' },
+  { id:'AP-08', col:'admin',   name:'Business Intelligence Dashboard',    description:'Platform KPIs, funnel metrics, revenue analytics', priority:'P1', phase:2, assignee:'you' },
+  { id:'AP-09', col:'admin',   name:'Fraud Detection Alerts',             description:'ML-based anomaly detection on bookings/payments', priority:'P1', phase:2, assignee:'you' },
+];
+
+// live components array — replaced by DB data when available
+let components = SEED.map(r => ({ ...r, desc: r.description }));
+
+// ─── SUPABASE ────────────────────────────────────────────────
+const SB_URL  = 'https://hjignwuphnomwjzksldq.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqaWdud3VwaG5vbXdqemtzbGRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MTY0NTUsImV4cCI6MjA5MDE5MjQ1NX0.BVsX_tUL-18ODyzfg5JIva53HvL79IAa7wTuXqCAZ0E';
+const SB_H    = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+const SB_UPSERT = { ...SB_H, 'Prefer': 'resolution=merge-duplicates,return=minimal' };
+
+let sbCache = {}; // task_id → status, loaded from DB on init
+
+async function sbInit() {
+  try {
+    // fetch components + statuses in parallel
+    const [cRes, sRes] = await Promise.all([
+      fetch(SB_URL + '/rest/v1/components?select=*&order=id', { headers: SB_H }),
+      fetch(SB_URL + '/rest/v1/task_statuses?select=task_id,status', { headers: SB_H }),
+    ]);
+
+    // load statuses into cache
+    if (sRes.ok) {
+      const rows = await sRes.json();
+      rows.forEach(r => { sbCache[r.task_id] = r.status; });
+    }
+
+    // load or seed components
+    if (cRes.ok) {
+      const rows = await cRes.json();
+      if (rows.length > 0) {
+        // use DB data
+        components = rows.map(r => ({ id:r.id, col:r.col, name:r.name, desc:r.description, priority:r.priority, phase:r.phase, assignee:r.assignee }));
+      } else {
+        // first run — seed components table
+        await fetch(SB_URL + '/rest/v1/components', {
+          method: 'POST', headers: SB_UPSERT, body: JSON.stringify(SEED),
+        });
+      }
+    }
+  } catch(e) { /* offline — fall back to SEED data + localStorage statuses */ }
+}
+
+async function sbSaveStatus(id, status) {
+  try {
+    await fetch(SB_URL + '/rest/v1/task_statuses', {
+      method: 'POST',
+      headers: SB_UPSERT,
+      body: JSON.stringify({ task_id: id, status, updated_at: new Date().toISOString() }),
+    });
+  } catch(e) {}
+}
+
+function getStatus(id) { return sbCache[id] || localStorage.getItem('bt2_' + id) || 'not-started'; }
+function setStatus(id, s) {
+  sbCache[id] = s;
+  localStorage.setItem('bt2_' + id, s);
+  sbSaveStatus(id, s);
+}
+
+function cycleStatus(id) {
+  const cur  = getStatus(id);
+  const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur) + 1) % STATUS_CYCLE.length];
+  setStatus(id, next);
+  renderBoard(); // re-render so card moves to correct column
+}
+
+// ─── BOARD COLUMNS ──────────────────────────────────────────
+const BOARD_COLS = [
+  { key:'yet-to-start', label:'Yet to be Started',    primaryStatus:'not-started',    statuses:['not-started','about-to-start','scaffolding','blocked'], accent:'#6B6962', bg:'#F1EFE8', darkBg:'#1C1C1A', darkAccent:'#9B9890' },
+  { key:'in-progress',  label:'In Progress',           primaryStatus:'in-progress',    statuses:['in-progress'],                                         accent:'#1D4ED8', bg:'#DBEAFE', darkBg:'#1E3A5F', darkAccent:'#93C5FD' },
+  { key:'built',        label:'Built',                  primaryStatus:'built',          statuses:['built'],                                               accent:'#0F766E', bg:'#CCFBF1', darkBg:'#0F3430', darkAccent:'#5EEAD4' },
+  { key:'tested',       label:'Tested',                 primaryStatus:'under-testing',  statuses:['under-testing'],                                       accent:'#854D0E', bg:'#FEF9C3', darkBg:'#422006', darkAccent:'#FDE68A' },
+  { key:'completed',    label:'Completed Integration',  primaryStatus:'completed',      statuses:['completed','done'],                                    accent:'#166534', bg:'#DCFCE7', darkBg:'#14532D', darkAccent:'#86EFAC' },
+];
+const AREA_LABELS = { shipper:'Shipper App', driver:'Driver App', fleet:'Fleet Portal', admin:'Admin Panel' };
+
+// ─── DRAG STATE ─────────────────────────────────────────────
+let dragId = null;
+
+// ─── RENDER BOARD ───────────────────────────────────────────
+function renderBoard() {
+  let html = '';
+  BOARD_COLS.forEach(col => {
+    const colCards = components.filter(c => col.statuses.includes(getStatus(c.id)));
+    html += `<div class="col" data-col="${col.key}">`;
+    html += `<div class="col-header ch-${col.key}">
+               <span class="col-name">${col.label}</span>
+               <span class="col-count">${colCards.length}</span>
+             </div>`;
+    html += `<div class="col-body" data-col="${col.key}"
+               ondragover="onDragOver(event)"
+               ondragleave="onDragLeave(event)"
+               ondrop="onDrop(event,'${col.key}')">`;
+
+    if (colCards.length === 0) {
+      html += `<div class="col-empty">Drop cards here</div>`;
+    } else {
+      colCards.forEach(c => {
+        const priClass = c.priority === 'P0' ? 'pri-p0' : c.priority === 'P1' ? 'pri-p1' : 'pri-p2';
+        html += `<div class="card" data-id="${c.id}" data-area="${c.col}" data-priority="${c.priority}"
+                   draggable="true"
+                   ondragstart="onDragStart(event,'${c.id}')"
+                   ondragend="onDragEnd(event)">
+          <div class="card-top">
+            <span class="card-code ${priClass}">${c.priority}</span>
+            <span class="card-name">${c.name}</span>
+            <button class="card-edit-btn" onclick="openEdit('${c.id}')">✏️</button>
+          </div>
+          <div class="card-desc">${c.desc}</div>
+          <div class="card-tags">
+            <span class="tag-area ${c.col}">${AREA_LABELS[c.col] || c.col}</span>
+            <span class="tag-week">${ASSIGNEE_LABELS[c.assignee] || c.assignee}</span>
+            <span class="tag-phase p${c.phase}">${PH_LABELS[c.phase]}</span>
+          </div></div>`;
+      });
+    }
+
+    html += `</div></div>`;
+  });
+  document.getElementById('board').innerHTML = html;
+  applyFilters();
+}
+
+// ─── DRAG & DROP ────────────────────────────────────────────
+function onDragStart(e, id) {
+  dragId = id;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { const el = document.querySelector(`.card[data-id="${id}"]`); if (el) el.classList.add('dragging'); }, 0);
+}
+function onDragEnd(e) {
+  document.querySelectorAll('.card.dragging').forEach(el => el.classList.remove('dragging'));
+  document.querySelectorAll('.col-body.drag-over').forEach(el => el.classList.remove('drag-over'));
+  dragId = null;
+}
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+function onDrop(e, colKey) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragId) return;
+  const col = BOARD_COLS.find(c => c.key === colKey);
+  if (!col) return;
+  // only update if actually moved to different column
+  const currentStatus = getStatus(dragId);
+  if (!col.statuses.includes(currentStatus)) {
+    setStatus(dragId, col.primaryStatus);
+    renderBoard();
+  }
+}
+
+// ─── FILTER ─────────────────────────────────────────────────
+let filterArea = 'all';
+let filterPri  = 'all';
+
+function setFilter(type, val, btn) {
+  document.querySelectorAll(`.filter-btn[data-ftype="${type}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (type === 'area') filterArea = val;
+  else filterPri = val;
+  applyFilters();
+}
+
+function applyFilters() {
+  document.querySelectorAll('.card').forEach(card => {
+    const hideArea = filterArea !== 'all' && card.dataset.area !== filterArea;
+    const hidePri  = filterPri  !== 'all' && card.dataset.priority !== filterPri;
+    card.classList.toggle('filtered', hideArea || hidePri);
+  });
+  document.querySelectorAll('.col-body').forEach(body => {
+    const col = body.closest('.col');
+    const visible = body.querySelectorAll('.card:not(.filtered)').length;
+    col.querySelector('.col-count').textContent = visible;
+    let empty = body.querySelector('.col-empty');
+    if (!empty) { empty = document.createElement('div'); empty.className='col-empty'; empty.textContent='Drop cards here'; body.appendChild(empty); }
+    empty.style.display = body.querySelectorAll('.card:not(.filtered)').length === 0 && body.querySelectorAll('.card').length > 0 ? 'block' : (body.querySelectorAll('.card').length === 0 ? 'block' : 'none');
+  });
+}
+
+// ─── VIEW TOGGLE ────────────────────────────────────────────
+function switchView(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  tabEl.classList.add('active');
+  const planBtns = document.querySelectorAll('#btn-expand, #btn-collapse');
+  planBtns.forEach(b => b.style.display = name === 'plan' ? '' : 'none');
+}
+
+// ─── PLAN ACCORDION ─────────────────────────────────────────
+function toggle(id) {
+  const week = document.getElementById(id);
+  const body = week.querySelector('.week-body');
+  const isOpen = week.classList.contains('open');
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; week.classList.remove('open'); });
+  } else {
+    week.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', () => {
+      if (week.classList.contains('open')) body.style.maxHeight = 'none';
+    }, { once: true });
+  }
+}
+function expandAll() {
+  document.querySelectorAll('.week').forEach(w => {
+    w.classList.add('open'); w.querySelector('.week-body').style.maxHeight = 'none';
+  });
+}
+function collapseAll() {
+  document.querySelectorAll('.week').forEach(w => {
+    const body = w.querySelector('.week-body');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; w.classList.remove('open'); });
+  });
+}
+
+// ─── MODAL ──────────────────────────────────────────────────
+let editingId = null;
+
+function openModal() {
+  editingId = null;
+  document.getElementById('modal-title-text').textContent = 'Add Card';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-col').value = 'shipper';
+  document.getElementById('f-assignee').value = 'd2';
+  document.getElementById('f-priority').value = 'P1';
+  document.getElementById('f-phase').value = '1';
+  document.getElementById('modal-delete-wrap').innerHTML = '';
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function openEdit(id) {
+  const c = components.find(x => x.id === id);
+  if (!c) return;
+  editingId = id;
+  document.getElementById('modal-title-text').textContent = 'Edit Card';
+  document.getElementById('f-name').value = c.name;
+  document.getElementById('f-desc').value = c.desc;
+  document.getElementById('f-col').value = c.col;
+  document.getElementById('f-assignee').value = c.assignee;
+  document.getElementById('f-priority').value = c.priority;
+  document.getElementById('f-phase').value = String(c.phase);
+  document.getElementById('modal-delete-wrap').innerHTML =
+    `<button class="btn-danger" onclick="deleteCard('${id}')">Delete</button>`;
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeModal();
+}
+
+async function saveCard() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { document.getElementById('f-name').focus(); return; }
+
+  const payload = {
+    col:         document.getElementById('f-col').value,
+    name,
+    description: document.getElementById('f-desc').value.trim(),
+    priority:    document.getElementById('f-priority').value,
+    phase:       parseInt(document.getElementById('f-phase').value),
+    assignee:    document.getElementById('f-assignee').value,
+  };
+
+  const btn = document.getElementById('modal-save-btn');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+
+  try {
+    if (editingId) {
+      // UPDATE
+      await fetch(`${SB_URL}/rest/v1/components?id=eq.${editingId}`, {
+        method: 'PATCH', headers: SB_H,
+        body: JSON.stringify(payload),
+      });
+      const idx = components.findIndex(c => c.id === editingId);
+      if (idx >= 0) components[idx] = { id: editingId, ...payload, desc: payload.description };
+    } else {
+      // INSERT — generate id from col prefix + timestamp
+      const prefix = { shipper:'SA', driver:'DA', fleet:'FP', admin:'AP' }[payload.col] || 'XX';
+      const newId  = `${prefix}-${Date.now()}`;
+      const full   = { id: newId, ...payload };
+      await fetch(`${SB_URL}/rest/v1/components`, {
+        method: 'POST', headers: SB_UPSERT,
+        body: JSON.stringify(full),
+      });
+      components.push({ ...full, desc: full.description });
+    }
+  } catch(e) {
+    if (!editingId) {
+      // offline fallback: add locally only
+      const newId = `LOCAL-${Date.now()}`;
+      components.push({ id: newId, ...payload, desc: payload.description });
+    }
+  }
+
+  btn.textContent = 'Save Card'; btn.disabled = false;
+  closeModal();
+  renderBoard();
+}
+
+async function deleteCard(id) {
+  if (!confirm('Delete this card? This cannot be undone.')) return;
+  try {
+    await fetch(`${SB_URL}/rest/v1/components?id=eq.${id}`, {
+      method: 'DELETE', headers: SB_H,
+    });
+  } catch(e) {}
+  components = components.filter(c => c.id !== id);
+  closeModal();
+  renderBoard();
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+renderBoard();        // show SEED data immediately — board never blank
+toggle('w1');
+sbInit().then(() => renderBoard()); // refresh with DB data once loaded
+</script>
+</body>
+</html>

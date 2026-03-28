@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Static File Server (Python)",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "python3 -m http.server ${PORT:-8080} --directory /Users/adityaroshanjoshi/Desktop/VS_Code/Web_Development/HTML/Plan"],
+      "port": 8080,
+      "autoPort": true
+    },
+    {
+      "name": "Wrangler Dev (Cloudflare)",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["wrangler", "dev", "--port", "8787"],
+      "port": 8787
+    }
+  ]
+}
